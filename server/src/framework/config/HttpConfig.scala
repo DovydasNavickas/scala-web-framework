@@ -98,7 +98,6 @@ case class HttpConfig(
   server: HttpServerConfig,
   logging: HttpServerLoggingConfig,
   clientRequestTracing: ClientRequestTracingConfig,
-  frontendUri: FrontendUri,
   corsAllowedDomains: Set[Host] = Set.empty,
 ) {
   lazy val corsAllowedDomainsStrings: Set[String] = corsAllowedDomains.iterator.map(_.show).toSet
@@ -117,7 +116,6 @@ object HttpConfig {
     HttpServerConfig.cirisConfig,
     HttpServerLoggingConfig.cirisConfig,
     ClientRequestTracingConfig.cirisConfig,
-    ciris.env(prefix("HTTP_FRONTEND_URI")).as[FrontendUri],
     ciris.default(Set.empty), // Do not read this from the environment, as we currently do not need it.
   ).mapN(apply)
 }
